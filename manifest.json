@@ -1,11 +1,11 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "default_locale": "zh_CN",
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
-  "version": "3.0.0",
+  "version": "2.0.7",
   "options_ui": {
-    "page": "dist/options.html"
+    "page": "./src/options.html"
   },
   "icons": {
     "256": "icon/icon.png"
@@ -13,11 +13,11 @@
   "browser_action": {
     "browser_style": true,
     "default_icon": "icon/icon-64.png",
-    "default_popup": "dist/popup.html"
+    "default_popup": "./src/popup.html"
   },
   "background": {
-    "service_worker": "src/background.ts",
-    "type": "module"
+    "scripts": ["./src/background.ts"],
+    "persistent": false
   },
   "permissions": [
     "alarms",

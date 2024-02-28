@@ -1,8 +1,8 @@
 import React from 'react'
 import { FluentBundle, FluentResource, FluentNumber, FluentFunction, FluentValue } from '@fluent/bundle'
-import { LocalizationProvider as LP } from '@fluent/react'
+import { LocalizationProvider as LP, ReactLocalization } from '@fluent/react'
 import zh_CN from './zh_CN'
-import { Maybe, maybeHas } from '~/src/types'
+import { maybeHas } from '~/src/types'
 
 const LangMap: Record<string, string> = {
   'zh-CN': zh_CN
@@ -11,28 +11,28 @@ const BundleMap: Record<string, FluentBundle> = {}
 const Langs = ['zh-CN']
 const functions: Record<string, FluentFunction> = {
   DIV([a, b]: FluentValue[]) {
-    return new FluentNumber(a.value / b.value)
+    return new FluentNumber(Number(a) / Number(b))
   },
-  STRLEN([str]: FluentValue<string>[]) {
-    return new FluentNumber(str.value.toString().length)
+  STRLEN([str]: FluentValue[]) {
+    return new FluentNumber(String(str).length)
   },
-  MINUS([a, b]: FluentValue<number>[]) {
-    return a.value - b.value
+  MINUS([a, b]: FluentValue[]) {
+    return new FluentNumber(Number(a) - Number(b))
   },
-  CMP([a, b]: FluentValue<number>[]) {
-    if (a.value === b.value) {
+  CMP([a, b]: FluentValue[]) {
+    if (a === b) {
       return 'EQ'
-    } else if (a.value > b.value) {
+    } else if (a > b) {
       return 'GT'
     } else {
       return 'LT'
     }
   },
-  STR([n]: FluentValue<number>[]) {
-    return n.value.toString()
+  STR([n]: FluentValue[]) {
+    return n
   },
-  MAYBE_HAS([n]: FluentValue<Maybe<any>>[]) {
-    return maybeHas(n.value) ? 'has' : 'none'
+  MAYBE_HAS([n]: FluentValue[]) {
+    return maybeHas(n) ? 'has' : 'none'
   }
 }
 
@@ -46,9 +46,10 @@ for (const locale of Object.keys(LangMap)) {
 
 const langs = [chrome.i18n.getUILanguage(), ...Langs]
 const bundles = langs.map(i => BundleMap[i]).filter(Boolean)
+const l10n = new ReactLocalization(bundles)
 
 export const LocalizationProvider: React.FC = ({ children }) => {
-  return <LP bundles={bundles}>
+  return <LP l10n={l10n}>
     <>{children}</>
   </LP>
 }

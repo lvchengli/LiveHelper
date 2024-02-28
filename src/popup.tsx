@@ -28,9 +28,11 @@ const Item: React.FC<{ room: Living }> = ({ room: {
     const hour = Math.round(min / 60)
     timeView = <Localized
       id='time-passed'
-      $hour={hour}
-      $min={min}
-      $sec={sec}
+      vars={{
+        hour,
+        min,
+        sec,
+      }}
     />
   }
 
@@ -43,7 +45,9 @@ const Item: React.FC<{ room: Living }> = ({ room: {
         <span className='author'>{author}</span>
         <span className='online'><Localized
           id={hasOnline ? 'online' : 'online-placeholder'}
-          $online={online}
+          vars={{
+            online
+          }}
         /></span>
       </div>
     </div>
@@ -111,10 +115,11 @@ const Popup: React.FC = () => {
     </div>
     <div>
       { keys.length > 0 ?
-        keys.map(k => <Site key={k} id={k} item={list[k]} />) :
-        <div className='go-option-tip'>
-          <Localized {...Widget} id='goto-option'><></></Localized>
-        </div> }
+        keys.map(k => <Site key={k} id={k} item={list[k]} />) : <></>
+        }
+      <div className='go-option-tip'>
+        <Localized elems={{...Widget}} id='goto-option'><></></Localized>
+      </div>
     </div>
   </LocalizationProvider>
 }

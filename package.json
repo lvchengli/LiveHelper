@@ -3,7 +3,8 @@
   "version": "2.0.5",
   "description": "帮你整合多个直播网站的关注列表",
   "scripts": {
-    "build": "parcel build manifest.json",
+    "build2": "rm -rf dist/ && node build/build.mjs",
+    "build": "rm -rf dist/ && parcel build manifest.json && node build/build2.mjs",
     "watch": "parcel watch manifest.json",
     "lint": "eslint --max-warnings=0 src",
     "test": "echo \"Error: no test specified\" && exit 1"
