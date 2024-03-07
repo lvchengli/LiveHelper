@@ -1,6 +1,6 @@
 {
   "name": "livehelper",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "帮你整合多个直播网站的关注列表",
   "scripts": {
     "build2": "rm -rf dist/ && node build/build.mjs",

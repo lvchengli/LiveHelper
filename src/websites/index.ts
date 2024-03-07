@@ -1,3 +1,4 @@
+import './douyin'
 import './douyu'
 import './bilibili'
 import './huya'

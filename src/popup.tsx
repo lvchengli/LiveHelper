@@ -5,6 +5,7 @@ import { useNow } from './utils'
 import { LocalizationProvider } from './langs'
 import { Localized } from '@fluent/react'
 import { Loading } from './loading'
+import { FluentVariable } from '@fluent/bundle'
 
 type Cache = Record<string, CacheItem>
 
@@ -46,7 +47,7 @@ const Item: React.FC<{ room: Living }> = ({ room: {
         <span className='online'><Localized
           id={hasOnline ? 'online' : 'online-placeholder'}
           vars={{
-            online
+            online: online as FluentVariable
           }}
         /></span>
       </div>
